@@ -14,6 +14,10 @@ public class IntField implements Field {
 
     private final int value;
 
+    public Object getObject() {
+        return value;
+    }
+
     public int getValue() {
         return value;
     }

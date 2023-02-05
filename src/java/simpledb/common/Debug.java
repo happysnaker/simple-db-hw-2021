@@ -20,7 +20,7 @@ public class Debug {
           // No system property = disabled
           DEBUG_LEVEL = -1;
       } else if (debug.length() == 0) {
-          // Empty property = level 0
+          // Empty property = level 1
           DEBUG_LEVEL = 0;
       } else {
           DEBUG_LEVEL = Integer.parseInt(debug);

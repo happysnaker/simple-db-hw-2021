@@ -12,8 +12,6 @@ import java.util.*;
  * Project is an operator that implements a relational projection.
  */
 public class Project extends Operator {
-
-    private static final long serialVersionUID = 1L;
     private OpIterator child;
     private final TupleDesc td;
     private final List<Integer> outFieldIds;

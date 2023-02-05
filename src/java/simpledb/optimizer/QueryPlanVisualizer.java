@@ -29,7 +29,7 @@ public class QueryPlanVisualizer {
         Operator o = (Operator) root;
         OpIterator[] children = o.getChildren();
 
-        if (o instanceof Join || o instanceof HashEquiJoin) {
+        if (o instanceof Join || o instanceof HashEqualJoin) {
             int d1 = this.calculateQueryPlanTreeDepth(children[0]);
             int d2 = this.calculateQueryPlanTreeDepth(children[1]);
             return Math.max(d1, d2) + 3;
@@ -138,8 +138,8 @@ public class QueryPlanVisualizer {
                 thisNode.leftChild = left;
                 thisNode.rightChild = right;
                 thisNode.height = currentDepth;
-            } else if (plan instanceof HashEquiJoin) {
-                HashEquiJoin j = (HashEquiJoin) plan;
+            } else if (plan instanceof HashEqualJoin) {
+                HashEqualJoin j = (HashEqualJoin) plan;
                 JoinPredicate jp = j.getJoinPredicate();
                 TupleDesc td = j.getTupleDesc();
                 String field1 = td.getFieldName(jp.getField1());

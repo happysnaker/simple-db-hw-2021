@@ -40,6 +40,11 @@ public class StringField implements Field {
 		return value;
 	}
 
+	@Override
+	public Object getObject() {
+		return value;
+	}
+
 	public int hashCode() {
 		return value.hashCode();
 	}

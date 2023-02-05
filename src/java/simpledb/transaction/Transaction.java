@@ -62,4 +62,12 @@ public class Transaction {
             started = false;
         }
     }
+
+    @Override
+    public String toString() {
+        return "Transaction{" +
+                "tid=" + tid +
+                ", started=" + started +
+                '}';
+    }
 }

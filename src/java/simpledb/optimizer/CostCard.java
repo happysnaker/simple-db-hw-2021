@@ -8,7 +8,7 @@ import java.util.List;
     cost and cardinality of the optimal plan represented by plan.
 */
 public class CostCard {
-    /** The cost of the optimal subplan */
+    /** The IO cost of the optimal subplan */
     public double cost;
     /** The cardinality of the optimal subplan */
     public int card;

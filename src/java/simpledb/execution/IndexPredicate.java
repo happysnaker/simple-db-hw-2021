@@ -4,6 +4,7 @@ import simpledb.storage.Field;
 
 import java.io.Serializable;
 
+
 /**
  * IndexPredicate compares a field which has index on it against a given value
  * @see IndexOpIterator

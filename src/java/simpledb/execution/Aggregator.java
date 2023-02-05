@@ -84,5 +84,4 @@ public interface Aggregator extends Serializable {
      * @see TupleIterator for a possible helper
      */
     OpIterator iterator();
-    
 }

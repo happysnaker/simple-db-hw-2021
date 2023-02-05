@@ -125,7 +125,17 @@ public class TableStatsTest extends SimpleDbTestBase {
 		final Field belowMin = new IntField(-10);
 		
 		TableStats s = new TableStats(this.tableId, IO_COST);
-		
+		int size = 0;
+		for (List<Integer> tuple : this.tuples) {
+			if (tuple.get(0) == (int) halfMaxMin.getObject()) {
+
+				size++;
+			}
+		}
+		System.out.println("size = " + size);
+		System.out.println("f = " + (1.0 * size / tuples.size()));
+
+
 		for (int col = 0; col < 10; col++) {
 			Assert.assertEquals(0.0, s.estimateSelectivity(col, Predicate.Op.EQUALS, aboveMax), 0.001);			
 			Assert.assertEquals(1.0/32.0, s.estimateSelectivity(col, Predicate.Op.EQUALS, halfMaxMin), 0.015);

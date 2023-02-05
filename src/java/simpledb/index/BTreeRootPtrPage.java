@@ -1,6 +1,7 @@
 package simpledb.index;
 
 import simpledb.common.DbException;
+import simpledb.storage.AbstractPage;
 import simpledb.storage.BufferPool;
 import simpledb.storage.Page;
 import simpledb.transaction.TransactionId;

@@ -5,6 +5,8 @@ import simpledb.common.DbException;
 import simpledb.storage.Tuple;
 import simpledb.storage.TupleDesc;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 /**
@@ -108,5 +110,6 @@ public abstract class Operator implements OpIterator {
     public void setEstimatedCardinality(int card) {
         this.estimatedCardinality = card;
     }
+
 
 }

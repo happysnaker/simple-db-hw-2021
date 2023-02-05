@@ -1,12 +1,26 @@
 package simpledb.execution;
 
 import simpledb.common.Type;
-import simpledb.storage.Tuple;
+import simpledb.storage.*;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Knows how to compute some aggregate over a set of StringFields.
  */
 public class StringAggregator implements Aggregator {
+    private int gbField;
+    private Type gbFieldType;
+    private int aField;
+    private Op op;
+    private TupleDesc td;
+    /**
+     * 分组运算的结果
+     */
+    private final Map<Field, Integer> resultMap;
 
     private static final long serialVersionUID = 1L;
 
@@ -19,8 +33,35 @@ public class StringAggregator implements Aggregator {
      * @throws IllegalArgumentException if what != COUNT
      */
 
-    public StringAggregator(int gbfield, Type gbfieldtype, int afield, Op what) {
+    public StringAggregator(int gbfield, Type gbfieldtype, int afield, Op op) {
         // some code goes here
+        if (op != Op.COUNT) {
+            throw new IllegalArgumentException();
+        }
+        this.gbField = gbfield;
+        this.gbFieldType = gbfieldtype;
+        this.aField = afield;
+        this.op = op;
+        this.resultMap = new ConcurrentHashMap<>();
+    }
+
+    protected void initTupleDesc(Tuple tuple) {
+        Type[] typeAr;
+        String[] fieldAr;
+        if (gbField == NO_GROUPING) {
+            typeAr = new Type[1];
+            fieldAr = new String[1];
+            typeAr[0] = Type.INT_TYPE; // 仅支持 COUNT
+            fieldAr[0] = String.format("%s(%s)", op, tuple.getTupleDesc().getFieldName(aField));
+        } else {
+            typeAr = new Type[2];
+            fieldAr = new String[2];
+            typeAr[0] = gbFieldType;
+            fieldAr[0] = tuple.getTupleDesc().getFieldName(gbField);
+            typeAr[1] = Type.INT_TYPE; // 仅支持 COUNT
+            fieldAr[1] = String.format("%s(%s)", op, tuple.getTupleDesc().getFieldName(aField));
+        }
+        this.td = new TupleDesc(typeAr, fieldAr);
     }
 
     /**
@@ -29,6 +70,11 @@ public class StringAggregator implements Aggregator {
      */
     public void mergeTupleIntoGroup(Tuple tup) {
         // some code goes here
+        if (this.td == null) {
+            initTupleDesc(tup);
+        }
+        Field groupByField = gbField == NO_GROUPING ? null : tup.getField(gbField);
+        resultMap.put(groupByField, resultMap.getOrDefault(groupByField, 0) + 1);
     }
 
     /**
@@ -41,7 +87,19 @@ public class StringAggregator implements Aggregator {
      */
     public OpIterator iterator() {
         // some code goes here
-        throw new UnsupportedOperationException("please implement me for lab2");
+        List<Tuple> tuples = new ArrayList<>();
+        for (Map.Entry<Field, Integer> it : this.resultMap.entrySet()) {
+            Tuple tuple = new Tuple(this.td);
+            Integer value = it.getValue();
+            if (gbField == NO_GROUPING) {
+                tuple.setField(0, new IntField(value));
+            } else {
+                tuple.setField(0, it.getKey());
+                tuple.setField(1, new IntField(value));
+            }
+            tuples.add(tuple);
+        }
+        return new TupleIterator(this.td, tuples);
     }
 
 }

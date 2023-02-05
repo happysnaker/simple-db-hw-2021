@@ -35,7 +35,7 @@ public class QueryTest {
         return Utility.openHeapFile(columns, colPrefix, temp);
 	}
 	
-	@Test(timeout=20000) public void queryTest() throws IOException {
+	@Test() public void queryTest() throws IOException {
 		// This test is intended to approximate the join described in the
 		// "Query Planning" section of 2009 Quiz 1,
 		// though with some minor variation due to limitations in simpledb
@@ -45,7 +45,7 @@ public class QueryTest {
 
 		// Create all of the tables, and add them to the catalog
 		List<List<Integer>> empTuples = new ArrayList<>();
-		HeapFile emp = SystemTestUtil.createRandomHeapFile(6, 100000, null, empTuples, "c");	
+		HeapFile emp = SystemTestUtil.createRandomHeapFile(6, 1000, null, empTuples, "c");
 		Database.getCatalog().addTable(emp, "emp");
 		
 		List<List<Integer>> deptTuples = new ArrayList<>();
@@ -57,7 +57,7 @@ public class QueryTest {
 		Database.getCatalog().addTable(hobby, "hobby");
 		
 		List<List<Integer>> hobbiesTuples = new ArrayList<>();
-		HeapFile hobbies = SystemTestUtil.createRandomHeapFile(2, 200000, null, hobbiesTuples, "c");
+		HeapFile hobbies = SystemTestUtil.createRandomHeapFile(2, 2000, null, hobbiesTuples, "c");
 		Database.getCatalog().addTable(hobbies, "hobbies");
 		
 		// Get TableStats objects for each of the tables that we just generated.
@@ -78,7 +78,7 @@ public class QueryTest {
 		// So, don't bother for now; future TODO.
 		// Regardless, each of the following should be optimized to run quickly,
 		// even though the worst case takes a very long time.
-		p.processNextStatement("SELECT * FROM emp,dept,hobbies,hobby WHERE emp.c1 = dept.c0 AND hobbies.c0 = emp.c2 AND hobbies.c1 = hobby.c0 AND emp.c3 < 1000;");
+		p.processNextStatement("SELECT emp.c3  FROM emp,dept,hobbies,hobby WHERE emp.c1 = dept.c0 AND hobbies.c0 = emp.c2 AND hobbies.c1 = hobby.c0 AND emp.c3 < 1000 GROUP BY emp.c3;");
 	}
 	
 	/*

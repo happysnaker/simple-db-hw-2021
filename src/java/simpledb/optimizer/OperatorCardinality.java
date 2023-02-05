@@ -28,8 +28,8 @@ public class OperatorCardinality {
                     tableStats);
         } else if (o instanceof Join) {
             return updateJoinCardinality((Join) o, tableAliasToId, tableStats);
-        } else if (o instanceof HashEquiJoin) {
-            return updateHashEquiJoinCardinality((HashEquiJoin) o,
+        } else if (o instanceof HashEqualJoin) {
+            return updateHashEquiJoinCardinality((HashEqualJoin) o,
                     tableAliasToId, tableStats);
         } else if (o instanceof Aggregate) {
             return updateAggregateCardinality((Aggregate) o, tableAliasToId,
@@ -146,7 +146,7 @@ public class OperatorCardinality {
         return child1HasJoinPK || child2HasJoinPK;
     }
 
-    private static boolean updateHashEquiJoinCardinality(HashEquiJoin j,
+    private static boolean updateHashEquiJoinCardinality(HashEqualJoin j,
                                                          Map<String, Integer> tableAliasToId,
                                                          Map<String, TableStats> tableStats) {
 

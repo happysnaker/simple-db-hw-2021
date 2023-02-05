@@ -47,6 +47,8 @@ public class AbortEvictionTest extends SimpleDbTestBase {
         SeqScan ss = new SeqScan(t.getId(), f.getId(), "");
         boolean found = false;
         ss.open();
+        Tuple[] tupleAr = ss.getTupleAr();
+        ss.rewind();
         while (ss.hasNext()) {
             Tuple v = ss.next();
             int v0 = ((IntField)v.getField(0)).getValue();

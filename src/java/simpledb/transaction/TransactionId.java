@@ -8,12 +8,17 @@ import java.util.concurrent.atomic.AtomicLong;
  */
 public class TransactionId implements Serializable {
 
+	final long myid;
+
     private static final long serialVersionUID = 1L;
 
     static final AtomicLong counter = new AtomicLong(0);
-    final long myid;
 
-    public TransactionId() {
+	public TransactionId(long myid) {
+		this.myid = myid;
+	}
+
+	public TransactionId() {
         myid = counter.getAndIncrement();
     }
 
@@ -39,5 +44,12 @@ public class TransactionId implements Serializable {
 		int result = 1;
 		result = prime * result + (int) (myid ^ (myid >>> 32));
 		return result;
+	}
+
+	@Override
+	public String toString() {
+		return "TransactionId{" +
+				"myid=" + myid +
+				'}';
 	}
 }

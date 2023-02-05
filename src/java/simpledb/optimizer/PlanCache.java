@@ -1,4 +1,4 @@
-package simpledb.execution;
+package simpledb.optimizer;
 import simpledb.optimizer.LogicalJoinNode;
 
 import java.util.HashMap;

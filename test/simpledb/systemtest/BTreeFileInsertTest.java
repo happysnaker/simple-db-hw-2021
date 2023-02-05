@@ -59,6 +59,9 @@ public class BTreeFileInsertTest extends SimpleDbTestBase {
 		// the next 251 tuples should live on page 2 since they are greater than
 		// all existing tuples in the file
 		for (int i = 502; i < 753; ++i) {
+			if (i >= 750) {
+				System.out.println(1);
+			}
 			tup = BTreeUtility.getBTreeTuple(i, 2);
 			empty.insertTuple(tid, tup);
 			assertEquals(3, empty.numPages());
@@ -274,14 +277,19 @@ public class BTreeFileInsertTest extends SimpleDbTestBase {
 		fit.open();
 		while(fit.hasNext()) {
 			Tuple tup = fit.next();
-			if(prev != null)
-				assertTrue(tup.getField(0).compare(Op.GREATER_THAN_OR_EQ, prev.getField(0)));
+			if(prev != null) {
+				boolean compare = tup.getField(0).compare(Op.GREATER_THAN_OR_EQ, prev.getField(0));
+				if (!compare) {
+					System.out.println("tup = " + tup);
+					System.out.println("prev = " + prev);
+				}
+				assertTrue(compare);
+			}
 			prev = tup;
 			count++;
 		}
 		fit.close();
-		assertEquals(31100, count);	
-		
+		assertEquals(31100, count);
 	}
 
 	/**

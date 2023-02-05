@@ -44,7 +44,7 @@ public class IntHistogramTest {
 	@Test public void negativeRangeTest() {
 		IntHistogram h = new IntHistogram(10, -60, -10);
 		
-		// All of the values here are negative.
+		// All the values here are negative.
 		// Also, there are more of them than there are bins.
 		for (int c = -60; c <= -10; c++) {
 			h.addValue(c);
@@ -134,7 +134,7 @@ public class IntHistogramTest {
 		// Be conservative in case of alternate implementations
 		Assert.assertTrue(h.estimateSelectivity(Op.GREATER_THAN_OR_EQ, -1) > 0.999);
 		Assert.assertTrue(h.estimateSelectivity(Op.GREATER_THAN_OR_EQ, 2) > 0.6);
-		Assert.assertTrue(h.estimateSelectivity(Op.GREATER_THAN_OR_EQ, 3) > 0.45);
+		Assert.assertTrue(h.estimateSelectivity(Op.GREATER_THAN_OR_EQ, 3) > 0.6);
 		Assert.assertTrue(h.estimateSelectivity(Op.GREATER_THAN_OR_EQ, 4) < 0.5);
 		Assert.assertTrue(h.estimateSelectivity(Op.GREATER_THAN_OR_EQ, 12) < 0.001);
 	}

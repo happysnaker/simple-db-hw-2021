@@ -74,5 +74,4 @@ public class Database {
     public static void reset() {
         _instance.set(new Database());
     }
-
 }

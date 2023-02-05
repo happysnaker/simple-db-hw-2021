@@ -3,10 +3,7 @@ package simpledb.index;
 import simpledb.common.DbException;
 import simpledb.common.Debug;
 import simpledb.common.Type;
-import simpledb.storage.BufferPool;
-import simpledb.storage.Field;
-import simpledb.storage.IntField;
-import simpledb.storage.Page;
+import simpledb.storage.*;
 import simpledb.transaction.TransactionId;
 
 import java.io.*;

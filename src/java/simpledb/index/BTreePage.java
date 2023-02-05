@@ -4,6 +4,7 @@ import simpledb.common.Catalog;
 import simpledb.common.Database;
 import simpledb.common.DbException;
 import simpledb.common.Type;
+import simpledb.storage.AbstractPage;
 import simpledb.storage.BufferPool;
 import simpledb.storage.Page;
 import simpledb.storage.TupleDesc;

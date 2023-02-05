@@ -283,18 +283,19 @@ public class LogTest extends SimpleDbTestBase {
     @Test public void TestCommitAbortCommitCrash()
             throws IOException, DbException, TransactionAbortedException {
         setup();
-        doInsert(hf1, 1, 2);
+
 
         // *** Test:
         // T1 inserts and commits
         // T2 inserts but aborts
         // T3 inserts and commit
         // only T1 and T3 data should be there
-
+        doInsert(hf1, 1, 2);
         doInsert(hf1, 5, -1);
         dontInsert(hf1, 6);
         doInsert(hf1, 7, -1);
 
+        Database.getBufferPool().pagePool.clear();
         Transaction t = new Transaction();
         t.start();
         look(hf1, t, 1, true);
@@ -306,8 +307,8 @@ public class LogTest extends SimpleDbTestBase {
         // *** Test:
         // crash: should not change visible data
 
-        crash();
 
+        crash();
         t = new Transaction();
         t.start();
         look(hf1, t, 1, true);
@@ -316,6 +317,7 @@ public class LogTest extends SimpleDbTestBase {
         look(hf1, t, 4, false);
         look(hf1, t, 5, true);
         look(hf1, t, 6, false);
+        look(hf1, t, 7, true);
         look(hf1, t, 7, true);
         t.commit();
     }

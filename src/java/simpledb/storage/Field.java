@@ -40,4 +40,10 @@ public interface Field extends Serializable{
     boolean equals(Object field);
 
     String toString();
+
+    /**
+     * 获取字段的值
+     * @return 返回字段的值
+     */
+    Object getObject();
 }
