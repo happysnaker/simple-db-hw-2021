@@ -275,7 +275,7 @@ public class HeapPage implements Page {
         if (!t.getRecordId().getPageId().equals(this.pid)) {
             throw new DbException("元组不属于此页面");
         }
-        if (!isSlotUsed(i) || !tuples[i].equals(t)) {
+        if (!isSlotUsed(i)) {
             throw new DbException("元组不存在");
         }
 

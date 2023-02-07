@@ -214,7 +214,7 @@ public class HeapFile implements DbFile {
             @Override
             protected Tuple readNext() throws DbException, TransactionAbortedException {
                 if (this.tupleIterator == null) {
-                    throw new NoSuchElementException("ReadNext without open it");
+                   return null;
                 }
                 // 这里需要注意的是，即使存在一个页面，这个页面中可能也没有任何有效的元组，这时应该迭代下一个页面
                 while (!this.tupleIterator.hasNext()) {
